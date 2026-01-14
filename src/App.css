@@ -1,0 +1,37 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-bottom: 4rem;
+}
+
+.page-section {
+  padding: 2.5rem 0;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-inner h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+  color: #222;
+}
+
+.section-inner p {
+  font-size: 0.95rem;
+  color: #555;
+  max-width: 640px;
+}
+
+.contact-email {
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
