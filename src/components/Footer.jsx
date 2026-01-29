@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-column footer-brand">
           <div className="footer-logo">
             <span className="footer-logo-mark">P</span>
-            <span className="footer-logo-text">ProdScope</span>
+            <span className="footer-logo-text">ProdScoop</span>
           </div>
           <p className="footer-description">
             Curated affiliate products from across the web. We highlight unique,
@@ -37,25 +37,20 @@ const Footer = () => {
 
         <div className="footer-column">
           <h4 className="footer-heading">Partners</h4>
-          <ul className="footer-links">
-            <li>Amazon Associates</li>
-            <li>Other affiliate networks</li>
-            <li>Brand collaborations</li>
-          </ul>
+          <p>No any partner yet.</p>
         </div>
 
         <div className="footer-column">
           <h4 className="footer-heading">Contact</h4>
           <ul className="footer-contact">
-            <li>+1 (000) 000 0000</li>
-            <li>hello@prodscope.com</li>
+            <li>info@prodscoop.com</li>
             <li>Remote / Worldwide</li>
           </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} ProdScope. All rights reserved.</span>
+        <span>© 2026 Desinftec. All rights reserved.</span>
       </div>
     </footer>
   );

@@ -85,33 +85,25 @@
 
 .product-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid #f3f4f6;
 }
 
-.product-price {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #111827;
-  letter-spacing: -0.02em;
-}
-
 .product-category {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  background-color: #f9fafb;
-  padding: 0.35rem 0.75rem;
-  border-radius: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
 }
 
 .product-card::after {
-  content: 'Shop Now →';
+  content: 'Get more info';
   position: absolute;
   bottom: 1.5rem;
   left: 1.5rem;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useProducts, useCategories, useSubcategories } from '../hooks/useProducts';
 import ProductCard from './ProductCard';
-import './RecommendedProducts.css';
+import './SponsoredProducts.css';
 
-const RecommendedProducts = () => {
+const SponsoredProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSubcategory, setSelectedSubcategory] = useState('all');
   
@@ -18,10 +18,13 @@ const RecommendedProducts = () => {
   };
 
   const { products, loading: productsLoading } = useProducts(filters);
+  
+  // Filter for sponsored products only
+  const sponsoredProducts = products.filter(p => p.sponsored);
 
   return (
-    <section id="recommended-products" className="recommended-section">
-      <div className="recommended-container">
+    <section id="sponsored-products" className="sponsored-section">
+      <div className="sponsored-container">
         <aside className="filter-sidebar">
           <div className="sidebar-header">
             <h3>Filters</h3>
@@ -68,28 +71,23 @@ const RecommendedProducts = () => {
 
           <div className="filter-results">
             <span className="results-count">
-              {productsLoading ? 'Loading...' : `${products.length} ${products.length === 1 ? 'product' : 'products'}`}
+              {productsLoading ? 'Loading...' : `${sponsoredProducts.length} ${sponsoredProducts.length === 1 ? 'product' : 'products'}`}
             </span>
           </div>
         </aside>
 
-        <div className="recommended-content">
-          <header className="recommended-header">
-            <h2>Recommended Products</h2>
-            <p>Curated picks based on what people love the most.</p>
-          </header>
-
-          <div className="recommended-grid">
+        <div className="sponsored-content">
+          <div className="sponsored-grid">
             {productsLoading ? (
-              <div className="recommended-empty">
+              <div className="sponsored-empty">
                 <p>Loading products...</p>
               </div>
-            ) : products.length === 0 ? (
-              <div className="recommended-empty">
-                <p>No products match these filters yet.</p>
+            ) : sponsoredProducts.length === 0 ? (
+              <div className="sponsored-empty">
+                <p>No sponsored products match these filters yet.</p>
               </div>
             ) : (
-              products.map((product) => (
+              sponsoredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))
             )}
@@ -100,5 +98,4 @@ const RecommendedProducts = () => {
   );
 };
 
-export default RecommendedProducts;
-
+export default SponsoredProducts;

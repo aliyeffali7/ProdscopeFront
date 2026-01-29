@@ -1,4 +1,4 @@
-# ProdScope - Affiliate Marketing Website
+# ProdScoop - Affiliate Marketing Website
 
 A modern React-based affiliate marketing website similar to ThisIsWhyImBroke.com.
 

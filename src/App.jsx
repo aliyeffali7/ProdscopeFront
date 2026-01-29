@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import OurMission from './pages/OurMission';
 import Contact from './pages/Contact';
 import RecommendedPage from './pages/RecommendedPage';
+import ProductDetail from './pages/ProductDetail';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/our-mission" element={<OurMission />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/recommended" element={<RecommendedPage />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </main>
         <Footer />
