@@ -23,6 +23,11 @@ export const getHero = async () => {
   return handleResponse(response);
 };
 
+export const getHeroImage = async () => {
+  const response = await fetch(`${API_BASE_URL}/hero/hero_image/`);
+  return handleResponse(response);
+};
+
 // CATEGORIES
 export const getCategories = async () => {
   const response = await fetch(`${API_BASE_URL}/categories/`);
@@ -77,6 +82,16 @@ export const trackProductView = async (id) => {
   return handleResponse(response);
 };
 
+/** Call only from the "Go to the product" button on the product detail page (before opening the external product link). */
+export const trackLinkView = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/products/${id}/track_link_view/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: '{}',
+  });
+  return handleResponse(response);
+};
+
 // MISSION SECTION
 export const getMission = async () => {
   const response = await fetch(`${API_BASE_URL}/mission/`);
@@ -102,5 +117,17 @@ export const getContactMessages = async () => {
 
 export const getContactMessage = async (id) => {
   const response = await fetch(`${API_BASE_URL}/contact/${id}/`);
+  return handleResponse(response);
+};
+
+// ADS
+export const getAds = async () => {
+  const response = await fetch(`${API_BASE_URL}/ads/`);
+  const data = await handleResponse(response);
+  return Array.isArray(data) ? data : (data.results || data.ads || []);
+};
+
+export const getAd = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/ads/${id}/`);
   return handleResponse(response);
 };

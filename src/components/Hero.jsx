@@ -1,15 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProducts, getImageUrl } from '../services/api';
+import { getProducts, getImageUrl, getHeroImage } from '../services/api';
 import './Hero.css';
+
+const HERO_IMAGE_FALLBACK = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600';
 
 const Hero = () => {
   const navigate = useNavigate();
   const [sponsoredProducts, setSponsoredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [heroImageUrl, setHeroImageUrl] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(1); // Start at 1 because we duplicate first slide
   const [isTransitioning, setIsTransitioning] = useState(true);
   const sliderTrackRef = useRef(null);
+
+  useEffect(() => {
+    const fetchHeroImage = async () => {
+      try {
+        const data = await getHeroImage();
+        if (data && data.image) {
+          const url = data.image.startsWith('http') ? data.image : getImageUrl(data.image);
+          setHeroImageUrl(url);
+        }
+      } catch (_) {
+        // Keep fallback
+      }
+    };
+    fetchHeroImage();
+  }, []);
 
   useEffect(() => {
     const fetchSponsoredProducts = async () => {
@@ -86,9 +104,12 @@ const Hero = () => {
       <div className="hero-inner">
         <div className="hero-image-wrapper">
           <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600"
+            src={heroImageUrl || HERO_IMAGE_FALLBACK}
             alt="Discover unique products curated for you"
             className="hero-image"
+            onError={(e) => {
+              e.target.src = HERO_IMAGE_FALLBACK;
+            }}
           />
           <div className="hero-overlay">
             <div className="hero-content-wrapper">

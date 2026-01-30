@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProduct, trackProductView, getImageUrl } from '../services/api';
+import { getProduct, trackProductView, trackLinkView, getImageUrl } from '../services/api';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -58,8 +58,15 @@ const ProductDetail = () => {
     );
   }
 
-  const handleGoToProduct = () => {
-    window.open(product.product_link, '_blank', 'noopener,noreferrer');
+  const handleGoToProduct = async () => {
+    try {
+      await trackLinkView(id);
+    } catch (err) {
+      console.warn('track_link_view failed:', err.message);
+    }
+    if (product.product_link) {
+      window.open(product.product_link, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import HeroAdBanner from '../components/HeroAdBanner';
 import RecommendedProducts from '../components/RecommendedProducts';
 import SponsoredProducts from '../components/SponsoredProducts';
 import './Home.css';
@@ -8,6 +9,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <Hero />
+      <HeroAdBanner />
       
       <section className="sponsored-section-home">
         <div className="section-container">

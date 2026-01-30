@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import AdSection from './components/AdSection';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import OurMission from './pages/OurMission';
@@ -14,6 +15,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
+        <AdSection />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />

@@ -6,12 +6,13 @@ import './ProductCard.css';
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleViewDetails = (e) => {
+    e.stopPropagation();
     navigate(`/product/${product.id}`);
   };
 
   return (
-    <div className="product-card" onClick={handleClick}>
+    <div className="product-card">
       <div className="product-image-container">
         {product.sponsored && (
           <div className="product-badge">Recommended</div>
@@ -33,6 +34,13 @@ const ProductCard = ({ product }) => {
             <span className="product-category">{product.category_name}</span>
           )}
         </div>
+        <button
+          type="button"
+          className="product-card-cta"
+          onClick={handleViewDetails}
+        >
+          View details
+        </button>
       </div>
     </div>
   );
