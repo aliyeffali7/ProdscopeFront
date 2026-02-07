@@ -3,6 +3,64 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct, trackProductView, trackLinkView, getImageUrl } from '../services/api';
 import './ProductDetail.css';
 
+const EXAMPLE_PRODUCT_DETAILS = {
+  1: {
+    id: 1,
+    name: 'Sony WH-1000XM5 Headphones',
+    image1: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900',
+    image2: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=1200',
+    short_description: 'Industry-leading noise cancellation and 30-hour battery. Best for travelers and commuters.',
+    long_description: 'The Sony WH-1000XM5 set the standard for wireless over-ear headphones. With best-in-class ANC, multipoint Bluetooth, and all-day comfort, they are our top pick for frequent travelers and anyone who values silence and sound quality. The 30mm drivers deliver clear, balanced audio, and the integrated mic works great for calls.',
+    category_name: 'Audio',
+    product_link: 'https://www.amazon.com/s?k=Sony+WH-1000XM5',
+  },
+  2: {
+    id: 2,
+    name: 'Dyson V15 Detect Cordless Vacuum',
+    image1: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=900',
+    short_description: 'Laser dust detection and strong suction. Ideal for pet owners and large homes.',
+    long_description: 'The Dyson V15 Detect uses a laser to reveal fine dust on hard floors and delivers strong suction across all surfaces. With a HEPA filter and multiple attachments, it is ideal for pet owners and larger homes. Runtime is up to 60 minutes in eco mode.',
+    category_name: 'Home',
+    product_link: 'https://www.amazon.com/s?k=Dyson+V15+Detect',
+  },
+  3: {
+    id: 3,
+    name: 'Kindle Paperwhite (2024)',
+    image1: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=900',
+    short_description: 'Crisp 6.8" display, waterproof, weeks of battery. Perfect for readers.',
+    long_description: 'The latest Kindle Paperwhite offers a sharp 6.8" 300 ppi display with adjustable warm light, IPX8 waterproofing, and weeks of battery life. It is our top choice for commuters and anyone who reads regularly. Storage options go up to 16 GB.',
+    category_name: 'Tech',
+    product_link: 'https://www.amazon.com/s?k=Kindle+Paperwhite',
+  },
+  4: {
+    id: 4,
+    name: 'Apple AirPods Pro 2',
+    image1: 'https://images.unsplash.com/photo-1598331668826-20cecc596b86?w=900',
+    short_description: 'Best-in-class transparency mode and ANC. Seamless with iPhone.',
+    long_description: 'AirPods Pro 2 deliver excellent noise cancellation and a standout transparency mode. They pair seamlessly with iPhone and support spatial audio and Find My. Battery life is up to 6 hours with ANC on, and the case supports MagSafe and USB-C.',
+    category_name: 'Audio',
+    product_link: 'https://www.amazon.com/s?k=AirPods+Pro+2',
+  },
+  5: {
+    id: 5,
+    name: 'Roborock S8 Pro Ultra',
+    image1: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=900',
+    short_description: 'Robot vacuum with mop and auto-empty dock. Set it and forget it.',
+    long_description: 'The Roborock S8 Pro Ultra combines strong vacuuming with mopping and an auto-empty, auto-wash dock. It maps your home with LiDAR and avoids obstacles and cables. Ideal for hands-off daily cleaning when you do not want to run a traditional vacuum.',
+    category_name: 'Home',
+    product_link: 'https://www.amazon.com/s?k=Roborock+S8+Pro+Ultra',
+  },
+  6: {
+    id: 6,
+    name: 'Logitech MX Master 3S',
+    image1: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=900',
+    short_description: 'Comfortable productivity mouse with fast scrolling and multiple devices.',
+    long_description: 'The MX Master 3S is built for long work sessions with a comfortable shape, quiet clicks, and a MagSpeed scroll wheel. It connects to up to 3 devices and works on most surfaces. A top pick for anyone who uses a mouse all day.',
+    category_name: 'Tech',
+    product_link: 'https://www.amazon.com/s?k=Logitech+MX+Master+3S',
+  },
+};
+
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,29 +70,29 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!id) return;
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
         const data = await getProduct(id);
         setProduct(data);
-        
-        // Track product view
         try {
           await trackProductView(id);
-        } catch (trackError) {
-          console.error('Error tracking view:', trackError);
-          // Don't fail the page if tracking fails
-        }
+        } catch (_) {}
       } catch (err) {
-        setError(err.message);
+        const example = EXAMPLE_PRODUCT_DETAILS[parseInt(id, 10)];
+        if (example) {
+          setProduct(example);
+          setError(null);
+        } else {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      fetchProduct();
-    }
+    fetchProduct();
   }, [id]);
 
   if (loading) {
@@ -76,7 +134,7 @@ const ProductDetail = () => {
         <section className="product-overview">
           <div className="product-media">
             <img 
-              src={getImageUrl(product.image1)} 
+              src={product.image1?.startsWith('http') ? product.image1 : getImageUrl(product.image1)} 
               alt={product.name}
               className="product-main-image"
               onError={(e) => {
@@ -134,7 +192,7 @@ const ProductDetail = () => {
         {product.image2 && (
           <section className="product-additional-photo">
             <img 
-              src={getImageUrl(product.image2)} 
+              src={product.image2?.startsWith('http') ? product.image2 : getImageUrl(product.image2)} 
               alt={`${product.name} - Additional view`}
               className="product-second-image"
               onError={(e) => {

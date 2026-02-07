@@ -20,18 +20,14 @@ const Footer = () => {
         <div className="footer-column">
           <h4 className="footer-heading">Navigation</h4>
           <ul className="footer-links">
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/recommended">Recommended Products</NavLink>
-            </li>
-            <li>
-              <NavLink to="/our-mission">Our Mission</NavLink>
-            </li>
-            <li>
-              <NavLink to="/contact">Contact</NavLink>
-            </li>
+            <li><NavLink to="/">Home</NavLink></li>
+            <li><NavLink to="/recommended">Recommended Products</NavLink></li>
+            <li><NavLink to="/product-reviews">Product Reviews</NavLink></li>
+            <li><NavLink to="/buying-guides">Buying Guides</NavLink></li>
+            <li><NavLink to="/comparisons">Comparisons</NavLink></li>
+            <li><NavLink to="/blog">Blog</NavLink></li>
+            <li><NavLink to="/our-mission">Our Mission</NavLink></li>
+            <li><NavLink to="/contact">Contact</NavLink></li>
           </ul>
         </div>
 

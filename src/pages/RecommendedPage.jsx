@@ -12,7 +12,7 @@ const RecommendedPage = () => {
           Discover hand-picked products that people love. Curated with care for quality and value.
         </p>
       </div>
-      <RecommendedProducts />
+      <RecommendedProducts useExampleData />
     </section>
   );
 };

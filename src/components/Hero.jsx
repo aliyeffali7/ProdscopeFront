@@ -5,16 +5,23 @@ import './Hero.css';
 
 const HERO_IMAGE_FALLBACK = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600';
 
-const Hero = () => {
+const EXAMPLE_SLIDER_PRODUCTS = [
+  { id: 1, name: 'Sony WH-1000XM5', image1: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600', short_description: 'Industry-leading noise cancellation and all-day comfort.' },
+  { id: 2, name: 'Dyson V15 Detect', image1: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=600', short_description: 'Laser dust detection and strong suction for every floor.' },
+  { id: 3, name: 'Kindle Paperwhite', image1: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600', short_description: 'Crisp display, waterproof, weeks of battery life.' },
+];
+
+const Hero = ({ useExampleData = false }) => {
   const navigate = useNavigate();
-  const [sponsoredProducts, setSponsoredProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [heroImageUrl, setHeroImageUrl] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(1); // Start at 1 because we duplicate first slide
+  const [sponsoredProducts, setSponsoredProducts] = useState(useExampleData ? EXAMPLE_SLIDER_PRODUCTS : []);
+  const [loading, setLoading] = useState(!useExampleData);
+  const [heroImageUrl, setHeroImageUrl] = useState(useExampleData ? HERO_IMAGE_FALLBACK : null);
+  const [currentSlide, setCurrentSlide] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const sliderTrackRef = useRef(null);
 
   useEffect(() => {
+    if (useExampleData) return;
     const fetchHeroImage = async () => {
       try {
         const data = await getHeroImage();
@@ -22,31 +29,27 @@ const Hero = () => {
           const url = data.image.startsWith('http') ? data.image : getImageUrl(data.image);
           setHeroImageUrl(url);
         }
-      } catch (_) {
-        // Keep fallback
-      }
+      } catch (_) {}
     };
     fetchHeroImage();
-  }, []);
+  }, [useExampleData]);
 
   useEffect(() => {
+    if (useExampleData) return;
     const fetchSponsoredProducts = async () => {
       try {
         setLoading(true);
         const data = await getProducts({});
-        // Get sponsored products (first 3)
-        const sponsored = data.products.filter(p => p.sponsored).slice(0, 3);
+        const sponsored = (data.products || []).filter(p => p.sponsored).slice(0, 3);
         setSponsoredProducts(sponsored);
-      } catch (error) {
-        console.error('Error fetching sponsored products:', error);
+      } catch (_) {
         setSponsoredProducts([]);
       } finally {
         setLoading(false);
       }
     };
-
     fetchSponsoredProducts();
-  }, []);
+  }, [useExampleData]);
 
   // Create duplicated slides for infinite loop
   const slides = sponsoredProducts.length > 0 ? [
@@ -104,7 +107,7 @@ const Hero = () => {
       <div className="hero-inner">
         <div className="hero-image-wrapper">
           <img
-            src={heroImageUrl || HERO_IMAGE_FALLBACK}
+            src={heroImageUrl ?? HERO_IMAGE_FALLBACK}
             alt="Discover unique products curated for you"
             className="hero-image"
             onError={(e) => {
@@ -146,7 +149,7 @@ const Hero = () => {
                             onClick={() => navigate(`/product/${product.id}`)}
                           >
                             <div className="slider-card-image">
-                              <img src={getImageUrl(product.image1)} alt={product.name} />
+                              <img src={product.image1?.startsWith('http') ? product.image1 : getImageUrl(product.image1)} alt={product.name} />
                             </div>
                             <div className="slider-card-content">
                               <h3 className="slider-card-title">{product.name}</h3>

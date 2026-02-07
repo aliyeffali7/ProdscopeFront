@@ -1,0 +1,53 @@
+.home-recommended {
+  padding: 0;
+  background-color: transparent;
+}
+
+.home-recommended-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.home-recommended-intro {
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+
+.home-recommended-lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4b5563;
+  margin: 0 0 1rem 0;
+}
+
+.home-recommended-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.home-recommended-cta:hover {
+  color: #764ba2;
+}
+
+.home-recommended-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+@media (max-width: 768px) {
+  .home-recommended-inner {
+    padding: 0 1rem;
+  }
+
+  .home-recommended-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+}

@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { getAds, getImageUrl } from '../services/api';
 import './HeroAdBanner.css';
 
-const HeroAdBanner = () => {
+const HeroAdBanner = ({ useExampleData = false }) => {
   const [ads, setAds] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!useExampleData);
 
   useEffect(() => {
+    if (useExampleData) {
+      setLoading(false);
+      return;
+    }
     const fetchAds = async () => {
       try {
         setLoading(true);
@@ -18,9 +22,8 @@ const HeroAdBanner = () => {
         setLoading(false);
       }
     };
-
     fetchAds();
-  }, []);
+  }, [useExampleData]);
 
   const adsWithImage = ads.filter((ad) => ad.image);
   const showPlaceholder = !loading && adsWithImage.length === 0;
